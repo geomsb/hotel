@@ -20,12 +20,24 @@ module Hotel
       return rooms
     end
 
+    # Returns true or false if the room is available for a specific date
+    def available_date?(start_date, end_date)
+      @reservations.each do |reservation|
+        unless ((Date.parse(start_date) <= reservation.end_date) && (Date.parse(start_date) >= reservation.start_date)) && ((Date.parse(end_date) >= reservation.end_date) && (Date.parse(end_date) >= reservation.start_date))
+          return true
+        else
+          return false 
+        end
+      end
+    end
+
     # Returns the first room available
-        
+    
     def self.available_room(rooms, start_date, end_date)
       return rooms.first
     end
 
+    # Create and add a reservation
     def add_reservation(start_date, end_date)
       if Date.parse(start_date) > Date.parse(end_date)
         raise ArgumentError.new("The start date cannot be greater than the end date")

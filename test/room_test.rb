@@ -71,7 +71,22 @@ describe "Room" do
     it "raises an argument error if the start_date is higher than the end_date" do
       expect do @second_room.add_reservation('2019-02-04','2019-02-03') end.must_raise ArgumentError
     end
-    
   end
+
+  describe "available_date" do
+    before do
+      @new_room = Hotel::Room.new(1)
+      @start_date = '2019-02-03'
+      @end_date = '2019-02-04'
+    end
+
+    it "returns true or false if the room is available for a specific date" do
+      @new_room.add_reservation(@start_date, @end_date)
+      @new_room.available_date?(@start_date, @end_date).must_equal false
+      @new_room.available_date?('2019-02-13', '2019-02-14').must_equal true
+    end
+
+  end
+
 end
 
