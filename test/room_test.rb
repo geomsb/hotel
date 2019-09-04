@@ -88,5 +88,30 @@ describe "Room" do
 
   end
 
+  describe "self.available_rooms_by_date" do
+    before do 
+      @rooms = Hotel::Room.create_all
+      @start_date = '2019-02-03'
+      @end_date = '2019-02-04'
+    end
+
+    it "returns an array with the available rooms for a specific period of time" do
+      available_rooms = Hotel::Room.available_rooms_by_date(@start_date, @end_date).must_be_kind_of Array
+    end
+  end
+
+  describe "self.reserved_rooms_by_date" do
+    before do 
+      @rooms = Hotel::Room.create_all
+      @start_date = '2019-02-03'
+      @end_date = '2019-02-04'
+    end
+    
+    it "returns an array with the reserved rooms for a specific period of time" do
+      available_rooms = Hotel::Room.reserved_rooms_by_date(@start_date, @end_date).must_be_kind_of Array
+    end
+
+  end
+
 end
 
