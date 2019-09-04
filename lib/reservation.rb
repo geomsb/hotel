@@ -7,5 +7,6 @@ module Hotel
       @end_date = Date.parse(end_date)
       
     end
+    
   end
 end
