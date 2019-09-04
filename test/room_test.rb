@@ -36,24 +36,31 @@ describe "Room" do
     end
 
     it "returns the first room available for the dates given" do
-      any_day = '2019-02-03'
-      next_day = '2019-02-04'
-      expect(Hotel::Room.available_room(@rooms, any_day, next_day)).must_equal @rooms.first
-    end    
+      any_date = '2019-02-03'
+      next_date = '2019-02-04'
+      expect(Hotel::Room.available_room(@rooms, any_date, next_date)).must_equal @rooms.first
+    end
+    
   end
 
-  # describe "add_reservation" do
-  #   before do
-  #   end
-  #   it "adds the reservation" do
-  #     expect(room.reservations).wont_include reservation
-  #     previous = room.reservations.length
+  describe "add_reservation" do
+    before do
+      @new_room = Hotel::Room.new(1)
+    end
 
-  #     room.add_reservation(reservation)
+    it "creates and adds the reservation" do
+      start_date = '2019-02-03'
+      end_date = '2019-02-04'
 
-  #     expect(room.reservations).must_include reservation
-  #     expect(room.reservations).must_equal previous + 1
-  #   end
-  # end
+      expect(@new_room.reservations).must_be_empty
+
+      reservation = @new_room.add_reservation(start_date, end_date)
+      
+      expect(reservation).must_be_kind_of Hotel::Reservation
+      expect(reservation.room_num).must_equal 1
+      expect(@new_room.reservations).must_include reservation
+      expect(@new_room.reservations.length).must_equal 1
+    end
+  end
 end
 

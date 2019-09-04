@@ -1,3 +1,5 @@
+require_relative 'reservation'
+
 module Hotel
   class Room
     attr_reader :room_num, :reservations
@@ -6,7 +8,7 @@ module Hotel
       @reservations = reservations || []
     end
 
-    # Creates and returns an array of all the rooms of the hotel
+    # Creates and returns an array of all the rooms of the hotel  
     def self.create_all
       rooms = []
       room_num = 1
@@ -20,9 +22,15 @@ module Hotel
 
     # Returns the first room available
         
-    def self.available_room(rooms, start_day, end_day)
+    def self.available_room(rooms, start_date, end_date)
       return rooms.first
     end
 
+    def add_reservation(start_date, end_date)
+      reservation = Reservation.new(0, 1, start_date, end_date)
+      @reservations << reservation
+      return reservation
+
+    end
   end
 end
