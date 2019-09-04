@@ -67,6 +67,11 @@ describe "Room" do
       reservation = @second_room.add_reservation(@start_date, @end_date)
       expect(reservation.room_num).must_equal 2
     end
+
+    it "raises an argument error if the start_date is higher than the end_date" do
+      expect do @second_room.add_reservation('2019-02-04','2019-02-03') end.must_raise ArgumentError
+    end
+    
   end
 end
 
