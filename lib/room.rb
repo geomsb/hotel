@@ -6,7 +6,7 @@ module Hotel
       @reservations = reservations || []
     end
 
-    #creates and returns an array of all the rooms of the hotel
+    # Creates and returns an array of all the rooms of the hotel
     def self.create_all
       rooms = []
       room_num = 1
@@ -18,6 +18,11 @@ module Hotel
       return rooms
     end
 
+    # Returns the first room available
+        
+    def self.available_room(rooms, start_day, end_day)
+      return rooms.first
+    end
 
   end
 end
