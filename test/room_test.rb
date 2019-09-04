@@ -46,20 +46,26 @@ describe "Room" do
   describe "add_reservation" do
     before do
       @new_room = Hotel::Room.new(1)
+      @second_room = Hotel::Room.new(2)
+      @start_date = '2019-02-03'
+      @end_date = '2019-02-04'
     end
 
     it "creates and adds the reservation" do
-      start_date = '2019-02-03'
-      end_date = '2019-02-04'
-
+  
       expect(@new_room.reservations).must_be_empty
 
-      reservation = @new_room.add_reservation(start_date, end_date)
+      reservation = @new_room.add_reservation(@start_date, @end_date)
       
       expect(reservation).must_be_kind_of Hotel::Reservation
       expect(reservation.room_num).must_equal 1
       expect(@new_room.reservations).must_include reservation
       expect(@new_room.reservations.length).must_equal 1
+    end
+
+    it "creates a reservation for a specific room" do
+      reservation = @second_room.add_reservation(@start_date, @end_date)
+      expect(reservation.room_num).must_equal 2
     end
   end
 end

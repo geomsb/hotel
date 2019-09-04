@@ -27,7 +27,7 @@ module Hotel
     end
 
     def add_reservation(start_date, end_date)
-      reservation = Reservation.new(0, 1, start_date, end_date)
+      reservation = Reservation.new(@room_num, start_date, end_date)
       @reservations << reservation
       return reservation
 
