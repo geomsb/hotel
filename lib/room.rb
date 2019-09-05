@@ -32,9 +32,9 @@ module Hotel
     end
 
     # Returns an array with the available rooms
-    def self.available_rooms_by_date(start_date, end_date)
+    def self.available_rooms_by_date(rooms, start_date, end_date)
       available_rooms = []
-      Room.create_all.each do |room|
+      rooms.each do |room|
         if room.available_date?(start_date,end_date) == true
         available_rooms << room 
         end
@@ -43,11 +43,11 @@ module Hotel
     end
 
     # Returns an array with the reserved rooms
-    def self.reserved_rooms_by_date(start_date, end_date)
+    def self.reserved_rooms_by_date(rooms, start_date, end_date)
       reserved_rooms = []
-      Room.create_all.each do |room|
+      rooms.each do |room|
         if room.available_date?(start_date,end_date) == false
-        available_rooms << room 
+          reserved_rooms << room 
         end
       end
       return reserved_rooms

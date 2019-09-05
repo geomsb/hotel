@@ -93,11 +93,19 @@ describe "Room" do
       @rooms = Hotel::Room.create_all
       @start_date = '2019-02-03'
       @end_date = '2019-02-04'
+      
     end
 
     it "returns an array with the available rooms for a specific period of time" do
-      available_rooms = Hotel::Room.available_rooms_by_date(@start_date, @end_date).must_be_kind_of Array
+      available_rooms = Hotel::Room.available_rooms_by_date(@rooms, @start_date, @end_date).must_be_kind_of Array
     end
+
+    it "doesn't return the reserved rooms" do
+      @rooms[0].add_reservation(@start_date, @end_date)
+      available_rooms = Hotel::Room.available_rooms_by_date(@rooms, @start_date, @end_date)
+      expect(available_rooms).wont_include(@rooms[0])
+    end
+
   end
 
   describe "self.reserved_rooms_by_date" do
@@ -108,8 +116,15 @@ describe "Room" do
     end
     
     it "returns an array with the reserved rooms for a specific period of time" do
-      available_rooms = Hotel::Room.reserved_rooms_by_date(@start_date, @end_date).must_be_kind_of Array
+      available_rooms = Hotel::Room.reserved_rooms_by_date(@rooms, @start_date, @end_date).must_be_kind_of Array
     end
+
+    it "returns the reserved rooms" do
+      @rooms[0].add_reservation(@start_date, @end_date)
+      reserved_rooms = Hotel::Room.reserved_rooms_by_date(@rooms, @start_date, @end_date)
+      expect(reserved_rooms).must_include(@rooms[0])
+    end
+
 
   end
 
