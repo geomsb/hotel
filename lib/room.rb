@@ -53,12 +53,6 @@ module Hotel
       return reserved_rooms
     end
 
-
-    # Returns the first room available
-    def self.available_room(rooms, start_date, end_date)
-      return rooms.first
-    end
-
     # Create and add a reservation
     def add_reservation(start_date, end_date)
       if Date.parse(start_date) > Date.parse(end_date)

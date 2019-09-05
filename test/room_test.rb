@@ -30,19 +30,6 @@ describe "Room" do
     end
   end
 
-  describe "available_room" do
-    before do 
-      @rooms = Hotel::Room.create_all
-    end
-
-    it "returns the first room available for the dates given" do
-      any_date = '2019-02-03'
-      next_date = '2019-02-04'
-      expect(Hotel::Room.available_room(@rooms, any_date, next_date)).must_equal @rooms.first
-    end
-    
-  end
-
   describe "add_reservation" do
     before do
       @new_room = Hotel::Room.new(1)
