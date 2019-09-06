@@ -22,20 +22,20 @@ module Hotel
 
     # Returns true or false if the room is available for a specific date
     def available_date?(start_date, end_date)
+      available_date = true
       @reservations.each do |reservation|
-        unless ((Date.parse(start_date) <= reservation.end_date) && (Date.parse(start_date) >= reservation.start_date)) && ((Date.parse(end_date) >= reservation.end_date) && (Date.parse(end_date) >= reservation.start_date))
-          return true
-        else
-          return false 
+         if (Date.parse(start_date) <= reservation.end_date) && (reservation.start_date <= Date.parse(end_date)) 
+          available_date = false
         end
       end
+      return available_date
     end
 
     # Returns an array with the available rooms
     def self.available_rooms_by_date(rooms, start_date, end_date)
       available_rooms = []
       rooms.each do |room|
-        if room.available_date?(start_date,end_date) == true
+        if room.available_date?(start_date,end_date) 
         available_rooms << room 
         end
       end
@@ -46,24 +46,25 @@ module Hotel
     def self.reserved_rooms_by_date(rooms, start_date, end_date)
       reserved_rooms = []
       rooms.each do |room|
-        if room.available_date?(start_date,end_date) == false
+        unless room.available_date?(start_date,end_date) 
           reserved_rooms << room 
         end
       end
       return reserved_rooms
     end
-
+ 
     # Create and add a reservation
     def add_reservation(start_date, end_date)
       if Date.parse(start_date) > Date.parse(end_date)
         raise ArgumentError.new("The start date cannot be greater than the end date")
       end
-
-      reservation = Reservation.new(@room_num, start_date, end_date)
-      @reservations << reservation
+      if available_date?(start_date, end_date) == true
+        reservation = Reservation.new(@room_num, start_date, end_date)
+        @reservations << reservation
+      else
+        raise StandardError.new("This room is not available for that dates") #standard error
+      end
       return reservation
     end
-
-
   end
 end

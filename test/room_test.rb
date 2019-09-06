@@ -58,6 +58,12 @@ describe "Room" do
     it "raises an argument error if the start_date is higher than the end_date" do
       expect do @second_room.add_reservation('2019-02-04','2019-02-03') end.must_raise ArgumentError
     end
+
+    it "raises an argument error if the room is not available" do
+      @new_room.add_reservation(@start_date, @end_date)
+      expect do @new_room.add_reservation(@start_date, @end_date) end.must_raise StandardError
+    end
+
   end
 
   describe "available_date" do
