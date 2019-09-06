@@ -62,7 +62,7 @@ module Hotel
         reservation = Reservation.new(@room_num, start_date, end_date)
         @reservations << reservation
       else
-        raise StandardError.new("This room is not available for that dates") #standard error
+        raise StandardError.new("This room is not available for that dates")
       end
       return reservation
     end

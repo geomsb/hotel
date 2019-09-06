@@ -7,22 +7,27 @@ module Hotel
       @rooms = Room.create_all
     end
 
-    def reserve_a_block(required_rooms, start_date, end_date)
-      if required_rooms > 5
+    # Before reserving a block I need to check if all the rooms are available for that specific range 
+
+    def reserve_a_block(rooms, start_date, end_date)
+
+      if rooms.length > 5
         raise ArgumentError.new("A block can contain a maximum of 5 rooms")
       end
 
-      rooms = @rooms
-      available_rooms_by_date = Room.available_rooms_by_date(rooms, start_date, end_date)
-      
-      if available_rooms_by_date.length >= required_rooms
-        room = 0
-        while room < required_rooms
-          available_rooms_by_date[0].add_reservation(@start_date, @end_date)
-          room += 1
+      available_block_rooms = []
+
+      rooms.each do |room|
+        if room.available_date?(start_date, end_date) == true
+          available_block_rooms += room
+        else
+          raise StandardError.new("The room #{room.room_num} is not available for that dates")
+      end
+
+      if available_block_rooms.length == rooms.length
+        available_block_rooms.each do |room|
+          room.add_reservation(@start_date, @end_date)
         end
-      else
-        raise StandardError.new("We don't have available rooms to reserve on that days")
       end
     end
   end
