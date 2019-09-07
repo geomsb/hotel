@@ -24,7 +24,10 @@ module Hotel
     def available_date?(start_date, end_date)
       available_date = true
       @reservations.each do |reservation|
-         if (Date.parse(start_date) <= reservation.end_date) && (reservation.start_date <= Date.parse(end_date)) 
+         if (Date.parse(start_date) <= reservation.start_date && Date.parse(start_date) < reservation.end_date) ||
+         (Date.parse(end_date) > reservation.start_date && Date.parse(end_date) <= reservation.end_date) ||
+         (reservation.start_date >= Date.parse(start_date) && reservation.start_date < Date.parse(end_date)) ||
+         (reservation.end_date > Date.parse(start_date) && reservation.end_date <= Date.parse(end_date))
           available_date = false
         end
       end

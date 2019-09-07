@@ -75,10 +75,16 @@ describe "Room" do
 
     it "returns true or false if the room is available for a specific date" do
       @new_room.add_reservation(@start_date, @end_date)
-      @new_room.available_date?(@start_date, @end_date).must_equal false
-      @new_room.available_date?('2019-02-13', '2019-02-14').must_equal true
+      expect(@new_room.available_date?(@start_date, @end_date)).must_equal false
+      expect(@new_room.available_date?('2019-02-13', '2019-02-14')).must_equal true
     end
 
+    it "allows reservations to start on the same day that another reservation for the same room ends" do
+      @new_room.add_reservation(@start_date, @end_date)
+      @new_room.available_date?(@start_date, @end_date)
+      @new_room.add_reservation('2019-02-04', '2019-02-06')
+      expect(@new_room.available_date?('2019-02-04', '2019-02-06')).must_equal false
+    end
   end
 
   describe "self.available_rooms_by_date" do
@@ -117,7 +123,6 @@ describe "Room" do
       reserved_rooms = Hotel::Room.reserved_rooms_by_date(@rooms, @start_date, @end_date)
       expect(reserved_rooms).must_include(@rooms[0])
     end
-
 
   end
 
