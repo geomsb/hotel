@@ -10,6 +10,9 @@ module Hotel
 
     def reserve_room(start_date, end_date)
       available_rooms = Room.available_rooms_by_date(@rooms, start_date, end_date)
+      if available_rooms.length == 0
+        raise StandardError.new("There are not any available rooms for that days")
+      end
       return available_rooms[0].add_reservation(start_date, end_date)
     end
 
