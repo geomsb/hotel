@@ -1,0 +1,18 @@
+General:
+I have a mix of strings and dates. Everything needs to use dates.
+
+Room:
+self.create_all could use map.
+available_rooms_by_date could use the filter method.
+self.reserved_rooms_by_date could use the filter method.
+
+Reservation:
+The cost could be a variable so it could be modified.
+
+Front desk:
+It has a lot of responsabilities.
+- available_block_rooms could be in the Hotel_block class.
+- create_a_block could be in the Hotel_block class.
+available_block_rooms could use the filter method.
+
+

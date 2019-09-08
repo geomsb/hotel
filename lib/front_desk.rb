@@ -56,9 +56,6 @@ module Hotel
       return available_rooms[0].add_reservation(start_date, end_date)
     end
 
-    # Before reserving a block I need to check if all the rooms are available for that specific range, then
-    # I reserve the rooms and create the block. 
-
     def create_a_block(rooms_block, start_date, end_date, rate)
 
       if rooms_block.length > 5
