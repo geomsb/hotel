@@ -79,6 +79,14 @@ describe "Room" do
       expect(@new_room.available_date?('2019-02-13', '2019-02-14')).must_equal true
     end
 
+    it "not overlapping reservations" do
+      @new_room.add_reservation(@start_date, @end_date)
+      expect(@new_room.available_date?(@start_date, @end_date)).must_equal false
+      expect(@new_room.available_date?('2019-02-13', '2019-02-14')).must_equal true
+      expect(@new_room.available_date?('2019-02-01', '2019-02-02')).must_equal true
+      expect(@new_room.available_date?('2019-02-01', @start_date)).must_equal true
+    end
+
     it "allows reservations to start on the same day that another reservation for the same room ends" do
       @new_room.add_reservation(@start_date, @end_date)
       @new_room.available_date?(@start_date, @end_date)

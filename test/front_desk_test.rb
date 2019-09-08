@@ -18,13 +18,21 @@ describe "Front_desk" do
       @start_date = '2019-02-03'
       @end_date = '2019-02-04'
       @front_desk = Hotel::Front_Desk.new
-      @front_desk.create_a_block([1,2,3], @start_date, @end_date, 180)
     end
 
     it "reserves a block room" do
+      @front_desk.create_a_block([1,2,3], @start_date, @end_date, 180)
       expect(@front_desk.reserve_room_block(1, @start_date, @end_date)).must_be_kind_of Hotel::Reservation
     end
 
+    it "raises a StandardError if there are no blocks and you try to reserve" do
+      expect do (@front_desk.reserve_room_block(1, @start_date, @end_date))end.must_raise StandardError
+    end
+
+    it "raises a StandardError if you try to reserve a room and it is not on-hold for those dates" do
+      @front_desk.create_a_block([1,2,3], @start_date, @end_date, 180)
+      expect do (@front_desk.reserve_room_block(1, '2019-02-13', '2019-02-14'))end.must_raise StandardError
+    end
   end
 
   describe "reserve_room" do
