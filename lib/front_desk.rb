@@ -31,6 +31,16 @@ module Hotel
       end
     end
 
+    def available_block_rooms(block)
+      available_b_rooms = []
+      block.rooms.each do |room|
+        if room.available_date?(block.start_date.to_s, block.end_date.to_s) == true
+          available_b_rooms << room
+        end
+      end
+      return available_b_rooms
+    end
+
     def reserve_room(start_date, end_date)
       available_rooms = Room.available_rooms_by_date(@rooms, start_date, end_date)
       if available_rooms.length == 0
@@ -69,6 +79,7 @@ module Hotel
       if available_block_rooms.length == rooms_block.length
         new_block = Hotel::Hotel_block.new(available_block_rooms, start_date, end_date, rate)
         @blocks << new_block
+        return new_block
       end
     end
   end

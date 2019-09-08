@@ -35,6 +35,22 @@ describe "Front_desk" do
     end
   end
 
+  describe "available_block_rooms" do
+    before do
+      @start_date = '2019-02-03'
+      @end_date = '2019-02-04'
+      @front_desk = Hotel::Front_Desk.new
+      @block = @front_desk.create_a_block([1,2,3], @start_date, @end_date, 180)
+      @front_desk.reserve_room_block(1, @start_date, @end_date)
+    end
+
+    it "returns an array of available rooms" do
+      expect(@front_desk.available_block_rooms(@block)).must_be_kind_of Array
+      expect(@front_desk.available_block_rooms(@block).length).must_equal 2
+    end
+
+  end
+
   describe "reserve_room" do
     before do
       @start_date = '2019-02-03'
