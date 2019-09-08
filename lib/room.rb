@@ -56,7 +56,7 @@ module Hotel
       return reserved_rooms
     end
  
-    # Create and add a reservation
+    # Creates and adds a reservation
     def add_reservation(start_date, end_date)
       if Date.parse(start_date) > Date.parse(end_date)
         raise ArgumentError.new("The start date cannot be greater than the end date")

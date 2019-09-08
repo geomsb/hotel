@@ -6,12 +6,25 @@ describe "Front_desk" do
       @start_date = '2019-02-03'
       @end_date = '2019-02-04'
       @front_desk = Hotel::Front_Desk.new
-      @rooms_block = [@front_desk[0], @front_desk[1], @front_desk[2]]
     end
 
-    it "checks if all the rooms are available for that specific range and it reserves and creates the block." do
-      new_block = @front_desk.reserve_a_block(@rooms_block, @start_date, @end_date)
+    it "creates the block" do
+      @front_desk.create_a_block([1,2,3], @start_date, @end_date, 180)
     end
+  end
+
+  describe "reserve_room_block" do
+    before do
+      @start_date = '2019-02-03'
+      @end_date = '2019-02-04'
+      @front_desk = Hotel::Front_Desk.new
+      @front_desk.create_a_block([1,2,3], @start_date, @end_date, 180)
+    end
+
+    it "reserves a block room" do
+      expect(@front_desk.reserve_room_block(1, @start_date, @end_date)).must_be_kind_of Hotel::Reservation
+    end
+
   end
 
   describe "reserve_room" do
